@@ -5,6 +5,7 @@ const routerUser = require('./app/controllers/userController');
 const routerTravel = require('./app/controllers/travelController');
 const routerAuth = require('./app/controllers/authController'); 
 
+
 //configuração do body-parser
 
 app.use(bodyParser.urlencoded({extended : false}));

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/Users');
+const auth = require('../middlewares/auth');
+
+router.use(auth);
 
 //A parte de criação de um usuário será feita no controller de autenticação
 

@@ -6,9 +6,7 @@ const User = require('../models/Users');
 
 router.get('/', async (req,res) => {
     try {
-        var users = User.findAll();
-
-        JSON.stringify(users);
+        var users = await User.findAll();
 
         res.status(206).send({users});
 
@@ -34,20 +32,13 @@ router.get('/:cpf', async (req,res) => {
 
 router.put('/:cpf', async (req,res) => {
     try {
-        var {firstName, lastName, email, password} = req.body;
-
-        await User.update({
-            firstName,
-            lastName,
-            email,
-            password
-        }, {
+        await User.update(req.body, {
             where : {
                 cpf : req.params.cpf
             }
         });
         
-        res.status(204).send({message : 'Os dados do usuário foram atualizados'});
+        res.status(200).send({message : 'Os dados do usuário foram atualizados'});
 
     } catch (error) {
         res.status(404).send({error : 'Não foi possível atualizar os dados do usuário'});
@@ -58,7 +49,7 @@ router.put('/:cpf', async (req,res) => {
 router.delete('/:cpf', async (req,res) => {
     try {
         await User.destroy({where : {
-            cpf : req.params.id
+            cpf : req.params.cpf
         }});
 
         res.status(204).send({message : 'Os dados do usuário foram deletados'});

@@ -27,7 +27,7 @@ const Travel = sequelize.define('Travels', {
         onUpdate : 'CASCADE',
         onDelete : 'CASCADE'
     }
-});
+}, {timestamps : false});
 
 //a instrução abaixo deve ser executada apenas uma vez
 
@@ -39,6 +39,6 @@ const createTable = async () => {
     }
 }
 
-createTable();
+//createTable();
 
 module.exports = Travel;

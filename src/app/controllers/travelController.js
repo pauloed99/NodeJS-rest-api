@@ -7,8 +7,6 @@ router.get('/', async (req,res) => {
     try {
         const travels = await Travel.findAll();
 
-        JSON.stringify(travels);
-
         res.status(206).send({travels});
 
     } catch (error) {

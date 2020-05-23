@@ -24,7 +24,7 @@ const User = sequelize.define('Users', {
         type : Sequelize.STRING,
         allowNull : false
     }
-});
+}, {timestamps : false});
 
 
 User.beforeCreate(async (user) => {
@@ -46,7 +46,7 @@ const createTable = async () => {
     }
 }
 
-createTable();
+//createTable();
 
 
 module.exports = User;

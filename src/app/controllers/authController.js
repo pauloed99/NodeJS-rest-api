@@ -11,6 +11,34 @@ router.post('/register', async(req,res) => {
 
         var {firstName, lastName, cpf, email, password, password2} = req.body;
 
+        if(!(firstName && lastName && cpf && email && password && password2))
+            res.status(400).send({error : 'Preencha todos os campos disponíveis !'});
+        
+        
+        if(password.length < 8)
+            res.status(400).send({error : 'A senha deve ter no mínimo 8 dígitos !'});
+        
+
+        if(password !== password2)
+            res.status(400).send({error : 'erro ao confirmar a senha, senhas incorretas !'});
+        
+
+        var user = await User.findOne({where : {
+            cpf
+        }});
+
+        if(user)
+            res.status(400).send({error : 'já existe um usuário com esse cpf cadastrado !'});
+        
+
+        var user = await User.findOne({where : {
+            email
+        }});
+
+        if(user)
+            res.status(400).send({error : 'já existe um usuário com esse email cadastrado !'})
+        
+
         var user = await User.create({firstName, lastName, cpf, email, password});
 
         const token = jwt.sign({cpf : user.cpf}, key.secret, {expiresIn : 86400});

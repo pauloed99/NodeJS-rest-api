@@ -8,7 +8,10 @@ const key = require('../../config/auth.json');
 
 router.post('/register', async(req,res) => {
     try {
-        var user = await User.create(req.body);
+
+        var {firstName, lastName, cpf, email, password, password2} = req.body;
+
+        var user = await User.create({firstName, lastName, cpf, email, password});
 
         const token = jwt.sign({cpf : user.cpf}, key.secret, {expiresIn : 86400});
 

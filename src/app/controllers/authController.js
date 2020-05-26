@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/Users');
 const key = require('../../config/auth.json'); 
+const auth = require('../middlewares/auth');
 
 
 router.post('/register', async(req,res) => {
@@ -41,7 +42,8 @@ router.post('/register', async(req,res) => {
 
         var user = await User.create({firstName, lastName, cpf, email, password});
 
-        const token = jwt.sign({cpf : user.cpf}, key.secret, {expiresIn : 86400});
+        const token = jwt.sign({firstName : user.firstName,
+        lastName : user.lastName, email : user.email}, key.secret, {expiresIn : 86400});
 
         user.password = undefined;
         
@@ -67,7 +69,8 @@ router.post('/login', async(req,res) => {
         if(!await bcrypt.compare(password,user.password))
             res.status(400).send({error : 'A senha foi digitada incorretamente'});    
         
-        const token = jwt.sign({cpf : user.cpf}, key.secret, {expiresIn : 86400});
+        const token = jwt.sign({firstName : user.firstName,
+        lastName : user.lastName, email : user.email}, key.secret, {expiresIn : 86400});
 
         user.password = undefined;
         
@@ -79,6 +82,15 @@ router.post('/login', async(req,res) => {
     }
 });
 
+router.get('/dashboard', auth, (req,res) => {
+    const user = req.user;
+
+    if(!user)
+        res.status(400).send({error : 'Falha ao obter os dados do usuário'});
+
+    res.status(200).send({user});
+     
+});
 
 
 module.exports = router;

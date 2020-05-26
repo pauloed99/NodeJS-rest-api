@@ -6,7 +6,7 @@ module.exports = (req,res,next) => {
     const authHeader = req.headers.authorization;
 
     if(!authHeader)
-        res.status(400).send({message : 'Nenhum token foi enviado'});
+        res.status(400).send({error : 'Nenhum token foi enviado'});
 
     const parts = authHeader.split(' ');
 
@@ -22,7 +22,7 @@ module.exports = (req,res,next) => {
         if(err)
             return res.status(401).send({error : 'Token inválido'});
         
-        req.userCpf = decoded.cpf; //variavel global contendo o payload decodificado
+        req.user = decoded; //variavel global contendo o payload decodificado
         return next();    
     })    
 }

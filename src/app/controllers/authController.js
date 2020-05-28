@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/Users');
 const key = require('../../config/auth.json'); 
-const auth = require('../middlewares/auth');
+
 
 
 router.post('/register', async(req,res) => {
@@ -80,16 +80,6 @@ router.post('/login', async(req,res) => {
     } catch (error) {
         res.status(401).send({error : 'Você não possui uma conta para efetuar login'});
     }
-});
-
-router.get('/dashboard', auth, (req,res) => {
-    const user = req.user;
-
-    if(!user)
-        res.status(400).send({error : 'Falha ao obter os dados do usuário'});
-
-    res.status(200).send({user});
-     
 });
 
 

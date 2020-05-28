@@ -19,11 +19,13 @@ router.get('/', async (req,res) => {
 });
 
 
-router.get('/:cpf', async (req,res) => {
+router.get('/:email', async (req,res) => {
     try {
         var user = await User.findOne({where : {
-            cpf : req.params.cpf
+            email : req.params.email
         }});
+
+        user.password = undefined;
 
         res.status(200).send({user});
 
@@ -33,11 +35,11 @@ router.get('/:cpf', async (req,res) => {
 });
 
 
-router.put('/:cpf', async (req,res) => {
+router.put('/:email', async (req,res) => {
     try {
         await User.update(req.body, {
             where : {
-                cpf : req.params.cpf
+                email : req.params.email
             }
         });
         
@@ -49,10 +51,10 @@ router.put('/:cpf', async (req,res) => {
 });
 
 
-router.delete('/:cpf', async (req,res) => {
+router.delete('/:email', async (req,res) => {
     try {
         await User.destroy({where : {
-            cpf : req.params.cpf
+            email : req.params.email
         }});
 
         res.status(204).send({message : 'Os dados do usuário foram deletados'});

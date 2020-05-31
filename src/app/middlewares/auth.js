@@ -6,7 +6,7 @@ module.exports = (req,res,next) => {
     const authHeader = req.headers.authorization;
 
     if(!authHeader)
-        res.status(400).send({error : 'Nenhum token foi enviado'});
+        return res.status(400).send({error : 'Nenhum token foi enviado'});
 
     const parts = authHeader.split(' ');
 

@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
 //configuração dos grupos de rotas
 
 app.use('/users', routerUser);
-app.use('/users/travels', routerTravel);
+app.use('/travels', routerTravel);
 app.use('/auth', routerAuth);
 
 

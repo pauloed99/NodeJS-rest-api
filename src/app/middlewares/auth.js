@@ -22,7 +22,7 @@ module.exports = (req,res,next) => {
         if(err)
             return res.status(401).send({error : 'Token inválido'});
         
-        req.user = decoded; //variavel global contendo o payload decodificado
+        req.userEmail = decoded.email; //variavel global contendo o payload decodificado
         return next();    
     })    
 }

@@ -46,6 +46,9 @@ router.post('/', async (req,res) => {
 
         var {stadium, country, city} = req.body;
 
+        if(!(stadium && country && city))
+            return res.status(400).send({error : 'Preencha todos os campos'});
+
         var travels = await Travel.findAll({where : {cpf_user : user.cpf}});
 
         const found = travels.find((item)=>item.stadium == stadium);
